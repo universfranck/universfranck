@@ -231,12 +231,13 @@ nav a:hover, nav a.active { color: var(--gold); }
 .btn-primary {
   background: var(--gold);
   color: var(--navy);
+  box-shadow: 0 2px 8px rgba(201,168,76,0.15);
 }
 .btn-primary:hover {
   background: var(--gold-light);
   color: var(--navy);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(201,168,76,0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(201,168,76,0.35);
 }
 
 .btn-secondary {
@@ -247,7 +248,7 @@ nav a:hover, nav a.active { color: var(--gold); }
 .btn-secondary:hover {
   border-color: var(--gold);
   color: var(--gold);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .btn-outline {
@@ -699,3 +700,27 @@ footer {
 
   .hero { padding: 4rem 1.25rem 3.5rem; }
 }
+
+/* ── ANIMATIONS (WOW Effect) ─────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero h1, .hero p, .hero-cta-group, .pitch-card, .testimonial-card, .module-hero h1, .module-hero p {
+  opacity: 0; /* Starting state for animation */
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.hero p { animation-delay: 0.1s; }
+.hero-cta-group { animation-delay: 0.2s; }
+
+.pitch-card:nth-child(1), .testimonial-card:nth-child(1) { animation-delay: 0.1s; }
+.pitch-card:nth-child(2), .testimonial-card:nth-child(2) { animation-delay: 0.25s; }
+.pitch-card:nth-child(3), .testimonial-card:nth-child(3) { animation-delay: 0.4s; }
