@@ -72,9 +72,9 @@
         <div>
           <div class="module-cta-box">
             <div style="font-family: var(--font-title); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);">完全版モジュール</div>
-            <span class="price"><s>¥1,800</s> ¥1,350</span>
+            <span class="price" id="jp-price">$9 USD</span>
             <p>91ページ · PDF · 購入後すぐにダウンロード</p>
-            <p style="font-size: 0.7rem; color: var(--navy-soft); margin-top: 0.25rem;">（$9 USD · 最終価格は購入時の為替レートにより多少変動します）</p>
+            <p style="font-size: 0.7rem; color: var(--navy-soft); margin-top: 0.25rem;" id="jp-price-note">（為替レートを取得中…）</p>
 
             <a href="https://universfranck.lemonsqueezy.com/checkout/buy/2c37b4f8-57a3-40fe-987e-32aa2e90eb94" class="btn btn-primary" target="_blank" rel="noopener">
               モジュール0を購入する
@@ -123,5 +123,25 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script>
+    // Prix dynamique USD → JPY via Frankfurter API (gratuit, sans clé)
+    const USD_PRICE = 9;
+    const USD_PRICE_BASE = 12;
+    fetch('https://api.frankfurter.app/latest?base=USD&symbols=JPY')
+      .then(r => r.json())
+      .then(data => {
+        const rate = data.rates.JPY;
+        const priceJPY = Math.round(USD_PRICE * rate);
+        const baseJPY  = Math.round(USD_PRICE_BASE * rate);
+        document.getElementById('jp-price').innerHTML =
+          '<s>¥' + baseJPY.toLocaleString('ja-JP') + '</s> ¥' + priceJPY.toLocaleString('ja-JP');
+        document.getElementById('jp-price-note').textContent =
+          '（$' + USD_PRICE + ' USD · 1ドル≈¥' + Math.round(rate) + ' · 決済時のレートにより多少変動します）';
+      })
+      .catch(() => {
+        document.getElementById('jp-price').textContent = '$9 USD';
+        document.getElementById('jp-price-note').textContent = '（円建て価格は決済画面でご確認いただけます）';
+      });
+  </script>
 </body>
 </html>
