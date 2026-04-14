@@ -72,9 +72,9 @@
         <div>
           <div class="module-cta-box">
             <div style="font-family: var(--font-title); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);">完全版モジュール</div>
-            <span class="price" id="jp-price">$9 USD</span>
+            <span class="price" id="jp-price"><s>¥1,800</s> ¥1,350</span>
             <p>91ページ · PDF · 購入後すぐにダウンロード</p>
-            <p style="font-size: 0.7rem; color: var(--navy-soft); margin-top: 0.25rem;" id="jp-price-note">（為替レートを取得中…）</p>
+            <p style="font-size: 0.7rem; color: var(--navy-soft); margin-top: 0.25rem;" id="jp-price-note">（決済画面で正確な価格をご確認いただけます）</p>
 
             <a href="https://universfranck.lemonsqueezy.com/checkout/buy/b48f7d7c-5a05-4ad7-b7b5-f6886639bb28" class="btn btn-primary lemonsqueezy-button">
               モジュール0を購入する
@@ -140,8 +140,8 @@
           '（$' + USD_PRICE + ' USD · 1ドル≈¥' + Math.round(rate) + ' · 決済時のレートにより多少変動します）';
       })
       .catch(() => {
-        document.getElementById('jp-price').textContent = '$9 USD';
-        document.getElementById('jp-price-note').textContent = '（円建て価格は決済画面でご確認いただけます）';
+        document.getElementById('jp-price').innerHTML = '<s>¥1,800</s> ¥1,350';
+        document.getElementById('jp-price-note').textContent = '（おおよその換算額 · 決済時の正確なレートにより多少変動します）';
       });
   </script>
 </body>
