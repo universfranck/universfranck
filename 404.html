@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page not found | Univers Franck</title>
+  <meta name="description" content="This page doesn't exist — but the rest of the universe does." />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .error-section {
+      background: var(--navy);
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1.5rem;
+    }
+    .error-code {
+      font-family: var(--font-title);
+      font-size: clamp(5rem, 15vw, 10rem);
+      color: var(--gold);
+      opacity: 0.2;
+      line-height: 1;
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .error-section h1 {
+      color: var(--parchment);
+      margin-bottom: 1rem;
+    }
+    .error-section p {
+      color: rgba(245,240,232,0.65);
+      font-style: italic;
+      max-width: 420px;
+      margin: 0 auto 2.5rem;
+    }
+    .error-cta-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div><span class="logo-uni">UNI</span><span class="logo-vers">·VERS</span> <span class="logo-franck">FRANCK</span></div>
+        <div class="logo-tagline">unis vers la liberté</div>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav>
+        <ul id="navMenu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="module0.html">Module 0</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="jp/index.html" class="lang-switch">日本語</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════ 404 ══════════════════════════════════ -->
+  <section class="error-section">
+    <div>
+      <span class="error-code">404</span>
+      <span class="section-label" style="display:block; margin-bottom:0.75rem;">Lost in translation</span>
+      <h1>This page doesn't exist.</h1>
+      <p>But the universe does. Head back and keep learning.</p>
+      <div class="error-cta-group">
+        <a href="index.html" class="btn btn-primary">Back to home</a>
+        <a href="module0.html" class="btn btn-secondary">Go to Module 0</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">
+        <span class="logo-uni" style="color:rgba(245,240,232,0.7)">UNI</span><span class="logo-vers" style="color:var(--gold)">·VERS</span> <span class="logo-franck" style="color:rgba(245,240,232,0.7)">FRANCK</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="module0.html">Module 0</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="jp/index.html">日本語</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Univers Franck · contact.universfranck@gmail.com</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
