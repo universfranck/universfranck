@@ -516,6 +516,79 @@ nav a:hover, nav a.active { color: var(--gold); }
   color: rgba(245,240,232,0.65);
 }
 
+/* ── FREE SAMPLE PREVIEW ─────────────────────────────────────── */
+.free-sample-preview {
+  text-align: left;
+  border: 1px solid rgba(245, 240, 232, 0.15);
+}
+
+/* Landing page layout (inside .email-capture on parchment bg) */
+.email-capture .free-sample-preview {
+  background: var(--navy);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.email-capture .free-sample-preview h3 {
+  color: var(--gold);
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.email-capture .free-sample-preview ul {
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+  color: rgba(245, 240, 232, 0.95); /* Extremely high contrast on navy */
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Module page layout (inside .module-cta-box on navy bg) */
+.module-cta-box .free-sample-preview {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.25rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+  font-size: 0.85rem;
+  border-color: rgba(245, 240, 232, 0.1);
+}
+
+.module-cta-box .free-sample-preview strong {
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.module-cta-box .free-sample-preview ul {
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+  color: rgba(245, 240, 232, 0.95); /* Changed from dark --navy-soft to light cream */
+  line-height: 1.5;
+}
+
+/* Privacy note styling */
+.free-sample-preview .privacy-note {
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.module-cta-box .free-sample-preview .privacy-note {
+  font-size: 0.75rem;
+  align-items: flex-start;
+  gap: 0.4rem;
+  line-height: 1.4;
+}
+
 /* ── ABOUT PAGE ──────────────────────────────────────────────── */
 .about-content {
   background: var(--parchment);
