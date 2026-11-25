@@ -170,16 +170,16 @@
           <div class="offer-price-box">
             <ul class="coaching-tiers">
               <li>
-                <span>Trial session &amp; level assessment (50 min · one-time)</span>
-                <span class="coaching-tier-price">$25</span>
+                <span>Trial session &amp; level assessment (<span data-uf-duree>50</span> min · one-time)</span>
+                <span class="coaching-tier-price" data-uf-price="essai">$25</span>
               </li>
               <li>
-                <span>Single session (50 min)</span>
-                <span class="coaching-tier-price">$55</span>
+                <span>Single session (<span data-uf-duree>50</span> min)</span>
+                <span class="coaching-tier-price" data-uf-price="unite">$55</span>
               </li>
               <li class="coaching-tier-highlight">
-                <span><strong>5-Session Pack</strong> (5 × 50 min · valid 3 months · $49/session)</span>
-                <span class="coaching-tier-price">$245</span>
+                <span><strong>5-Session Pack</strong> (5 × <span data-uf-duree>50</span> min · <span data-uf-price="pack5-unit">$49</span>/session)</span>
+                <span class="coaching-tier-price" data-uf-price="pack5">$245</span>
               </li>
             </ul>
           </div>
@@ -191,14 +191,14 @@
           <ul class="offer-list">
             <li><span class="offer-check">✓</span><span>50 min live on Google Meet — speaking, precision pronunciation &amp; DELF/DALF prep</span></li>
             <li><span class="offer-check">✓</span><span>Between sessions, review your own lesson notes inside <strong>★ My Space</strong></span></li>
-            <li><span class="offer-check">✓</span><span>Flexible packs — no rigid monthly lesson commitment</span></li>
+            <li><span class="offer-check">✓</span><span>Flexible credit packs &amp; live Google Calendar booking — no rigid monthly commitment</span></li>
           </ul>
 
           <div class="offer-actions">
-            <a href="mailto:tim@universfranck.com?subject=Private%20French%20Lessons%20%E2%80%94%20Trial%20Session%20Inquiry" class="btn btn-primary">Book a Trial / Contact Tim →</a>
-            <a href="contact.html" class="btn btn-secondary">Contact Details &amp; FAQ</a>
+            <a href="https://univers-franck.web.app/?lang=en#cours" class="btn btn-primary" target="_blank" rel="noopener">View Calendar &amp; Book Online →</a>
+            <a href="contact.html" class="btn btn-secondary">Questions? Contact Tim</a>
           </div>
-          <p class="offer-fine-print">Guaranteed rate for active students · Limited weekly availability. Direct booking via email at tim@universfranck.com while the integrated scheduling module is opening.</p>
+          <p class="offer-fine-print">Guaranteed rate for active students · Real-time timezone &amp; Google Meet scheduling inside your student portal.</p>
         </article>
 
       </div>
@@ -243,7 +243,7 @@
       <p>Open the interactive free preview right in your browser — no sign-up, no credit card, and your progress stays with you.</p>
       <div class="final-cta-actions">
         <a href="https://univers-franck.web.app/decouverte.html?lang=en" class="btn btn-primary" target="_blank" rel="noopener">Launch Free Preview →</a>
-        <a href="mailto:tim@universfranck.com?subject=Private%20French%20Lessons%20%E2%80%94%20Inquiry" class="btn btn-outline">Ask about Private Lessons</a>
+        <a href="https://univers-franck.web.app/?lang=en#cours" class="btn btn-outline" target="_blank" rel="noopener">Book Private Lessons →</a>
       </div>
     </div>
   </section>
@@ -268,5 +268,28 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    (function () {
+      fetch('https://asia-northeast1-univers-franck.cloudfunctions.net/tarifsPublicsCours')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || !d.ok || !d.tarifs || !d.tarifs.usd) return;
+          var u = d.tarifs.usd;
+          var fmt = function (n) { return '$' + Number(n).toLocaleString('en-US'); };
+          var set = function (k, v) {
+            var el = document.querySelector('[data-uf-price="' + k + '"]');
+            if (el && v > 0) el.textContent = fmt(v);
+          };
+          set('essai', u.essai);
+          set('unite', u.unite);
+          set('pack5', u.pack5);
+          if (u.pack5 > 0) set('pack5-unit', Math.round(u.pack5 / 5));
+          if (d.dureeMin > 0) {
+            document.querySelectorAll('[data-uf-duree]').forEach(function (el) { el.textContent = d.dureeMin; });
+          }
+        })
+        .catch(function () {});
+    })();
+  </script>
 </body>
 </html>

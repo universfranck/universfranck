@@ -168,16 +168,16 @@
           <div class="offer-price-box">
             <ul class="coaching-tiers">
               <li>
-                <span>体験レッスン＆レベル診断（50分・初回1回）</span>
-                <span class="coaching-tier-price">3,000 ¥</span>
+                <span>体験レッスン＆レベル診断（<span data-uf-duree>50</span>分・初回1回）</span>
+                <span class="coaching-tier-price" data-uf-price="essai">3,000 ¥</span>
               </li>
               <li>
-                <span>単発レッスン（50分）</span>
-                <span class="coaching-tier-price">5,500 ¥</span>
+                <span>単発レッスン（<span data-uf-duree>50</span>分）</span>
+                <span class="coaching-tier-price" data-uf-price="unite">5,500 ¥</span>
               </li>
               <li class="coaching-tier-highlight">
-                <span><strong>5回パック</strong>（50分×5回・3ヶ月有効・1回5,000 ¥）</span>
-                <span class="coaching-tier-price">25,000 ¥</span>
+                <span><strong>5回パック</strong>（<span data-uf-duree>50</span>分×5回・1回<span data-uf-price="pack5-unit">5,000 ¥</span>）</span>
+                <span class="coaching-tier-price" data-uf-price="pack5">25,000 ¥</span>
               </li>
             </ul>
           </div>
@@ -189,14 +189,14 @@
           <ul class="offer-list">
             <li><span class="offer-check">✓</span><span>Google Meet 50分で会話・繊細な発音矯正・DELF/DALF対策に集中</span></li>
             <li><span class="offer-check">✓</span><span>レッスン外はアプリ＆<strong>★ マイスペース</strong>で自分の弱点だけを効率復習</span></li>
-            <li><span class="offer-check">✓</span><span>毎月の固定縛りなし — 好きなペースで受けられる5回パック制</span></li>
+            <li><span class="offer-check">✓</span><span>毎月の固定縛りなし — 空き枠カレンダーからいつでも予約できる回数パック制</span></li>
           </ul>
 
           <div class="offer-actions">
-            <a href="mailto:tim@universfranck.com?subject=%E5%80%8B%E4%BA%BA%E3%83%AC%E3%83%83%E3%82%B9%E3%83%B3%E3%83%BB%E4%BD%93%E9%A8%93%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B" class="btn btn-primary">体験レッスン・お問い合わせ →</a>
-            <a href="contact.html" class="btn btn-secondary">連絡先・ご相談内容を見る</a>
+            <a href="https://univers-franck.web.app/?lang=ja#cours" class="btn btn-primary" target="_blank" rel="noopener">空き枠を見る・体験レッスン予約 →</a>
+            <a href="contact.html" class="btn btn-secondary">ご質問・お問い合わせ</a>
           </div>
-          <p class="offer-fine-print">継続受講生は現行料金を保証 · 枠数限定。専用予約システム公開までは tim@universfranck.com 宛のメールにて直接ご予約を承っています（銀行振込・オンライン決済対応）。</p>
+          <p class="offer-fine-print">継続受講生は現行料金を保証 · 銀行振込（手数料0%）・カード決済対応 · Google Meet 自動発行。</p>
         </article>
 
       </div>
@@ -241,7 +241,7 @@
       <p>アカウント作成もクレジットカードも不要です。ブラウザですぐに Univers Franck の読解・音声・文法・発音をお試しいただけます。</p>
       <div class="final-cta-actions">
         <a href="https://univers-franck.web.app/decouverte.html?lang=ja" class="btn btn-primary" target="_blank" rel="noopener">登録なしで無料おためし →</a>
-        <a href="mailto:tim@universfranck.com?subject=%E5%80%8B%E4%BA%BA%E3%83%AC%E3%83%83%E3%82%B9%E3%83%B3%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87" class="btn btn-outline">個人レッスンを相談する</a>
+        <a href="https://univers-franck.web.app/?lang=ja#cours" class="btn btn-outline" target="_blank" rel="noopener">個人レッスン空き枠・予約 →</a>
       </div>
     </div>
   </section>
@@ -266,5 +266,28 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script>
+    (function () {
+      fetch('https://asia-northeast1-univers-franck.cloudfunctions.net/tarifsPublicsCours')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || !d.ok || !d.tarifs || !d.tarifs.jpy) return;
+          var j = d.tarifs.jpy;
+          var fmt = function (n) { return Number(n).toLocaleString('ja-JP') + ' ¥'; };
+          var set = function (k, v) {
+            var el = document.querySelector('[data-uf-price="' + k + '"]');
+            if (el && v > 0) el.textContent = fmt(v);
+          };
+          set('essai', j.essai);
+          set('unite', j.unite);
+          set('pack5', j.pack5);
+          if (j.pack5 > 0) set('pack5-unit', Math.round(j.pack5 / 5));
+          if (d.dureeMin > 0) {
+            document.querySelectorAll('[data-uf-duree]').forEach(function (el) { el.textContent = d.dureeMin; });
+          }
+        })
+        .catch(function () {});
+    })();
+  </script>
 </body>
 </html>
