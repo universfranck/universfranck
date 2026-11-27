@@ -168,6 +168,7 @@
           <p class="offer-subtitle">Google Meet 50分の完全1対1コーチング — アプリと連動したオーダーメイド指導。</p>
 
           <div class="offer-price-box">
+            <div data-uf-promo-banner style="display:none; margin-bottom:10px; padding:8px 12px; border-radius:8px; background:rgba(212,175,55,0.16); border:1px solid rgba(212,175,55,0.55); color:#f3d27a; font-size:0.88rem; font-weight:700;"></div>
             <ul class="coaching-tiers">
               <li>
                 <span>体験レッスン＆レベル診断（<span data-uf-duree>50</span>分・初回1回）</span>
@@ -180,6 +181,10 @@
               <li class="coaching-tier-highlight">
                 <span><strong>5回パック</strong>（<span data-uf-duree>50</span>分×5回・1回<span data-uf-price="pack5-unit">5,000 ¥</span>）</span>
                 <span class="coaching-tier-price" data-uf-price="pack5">25,000 ¥</span>
+              </li>
+              <li>
+                <span><strong>10回パック</strong>（<span data-uf-duree>50</span>分×10回・1回<span data-uf-price="pack10-unit">4,800 ¥</span>）</span>
+                <span class="coaching-tier-price" data-uf-price="pack10">48,000 ¥</span>
               </li>
             </ul>
           </div>
@@ -271,20 +276,41 @@
   <script src="../js/main.js"></script>
   <script>
     (function () {
-      fetch('https://asia-northeast1-univers-franck.cloudfunctions.net/tarifsPublicsCours')
+      fetch('https://tarifspublicscours-befw6zeowa-an.a.run.app')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) {
           if (!d || !d.ok || !d.tarifs || !d.tarifs.jpy) return;
           var j = d.tarifs.jpy;
+          var p = (d.promo && d.promo.active && d.promo.monnaie === 'jpy') ? d.promo : null;
           var fmt = function (n) { return Number(n).toLocaleString('ja-JP') + ' ¥'; };
-          var set = function (k, v) {
+          var set = function (k, v, normal) {
             var el = document.querySelector('[data-uf-price="' + k + '"]');
-            if (el && v > 0) el.textContent = fmt(v);
+            if (!el || !(v > 0)) return;
+            if (normal && normal > v) {
+              el.innerHTML = '<del style="opacity:0.6;font-size:0.85em;margin-right:6px;">' + fmt(normal) + '</del><span>' + fmt(v) + '</span>';
+            } else {
+              el.textContent = fmt(v);
+            }
           };
           set('essai', j.essai);
-          set('unite', j.unite);
-          set('pack5', j.pack5);
-          if (j.pack5 > 0) set('pack5-unit', Math.round(j.pack5 / 5));
+          var uAct = (p && p.unite > 0 && p.unite < j.unite) ? p.unite : j.unite;
+          var p5Act = (p && p.pack5 > 0 && p.pack5 < j.pack5) ? p.pack5 : j.pack5;
+          var p10Act = (p && p.pack10 > 0 && p.pack10 < j.pack10) ? p.pack10 : j.pack10;
+          set('unite', uAct, uAct < j.unite ? j.unite : 0);
+          set('pack5', p5Act, p5Act < j.pack5 ? j.pack5 : 0);
+          set('pack10', p10Act, p10Act < j.pack10 ? j.pack10 : 0);
+          if (p5Act > 0) set('pack5-unit', Math.round(p5Act / 5));
+          if (p10Act > 0) set('pack10-unit', Math.round(p10Act / 10));
+          var banner = document.querySelector('[data-uf-promo-banner]');
+          if (banner && p && (uAct < j.unite || p5Act < j.pack5 || p10Act < j.pack10)) {
+            var finTxt = '';
+            if (p.fin && /^\d{4}-\d{2}-\d{2}$/.test(p.fin)) {
+              var parts = p.fin.split('-');
+              finTxt = Number(parts[0]) + '年' + Number(parts[1]) + '月' + Number(parts[2]) + '日まで';
+            }
+            banner.textContent = '🎉 ' + (p.libelle || '期間限定キャンペーン') + ' — ' + (finTxt ? finTxt + '特別価格' : 'ただいま特別価格');
+            banner.style.display = 'block';
+          }
           if (d.dureeMin > 0) {
             document.querySelectorAll('[data-uf-duree]').forEach(function (el) { el.textContent = d.dureeMin; });
           }
